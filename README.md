@@ -15,7 +15,7 @@ make up
 make argocd
 make app
 ```
-Wait a minute and run
+Wait until application is created and started (it make take several minutes) and run
 ```
 curl --fail --silent http://localhost:8080/todos
 ```
