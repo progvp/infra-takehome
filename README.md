@@ -1,55 +1,29 @@
 # Infrastructure Take Home
 
-Treat this system as a production system.
+## Installation
 
-## Getting Started
+Install a fresh Ubuntu 24.04 server LTS  
+Copy the `ubuntu-bootstrap.sh` file into the home dir of `ubuntu` user  
+Run this script as `ubuntu` user, it will install all necessary packages  
+Log out and log in back  
+Copy this folder or clone this repo to ~/infra-takehome  
 
-Clone this repository locally.
-Create your own public git repository in github or somewhere we can access and push this code into it.
-Make changes to your repository.
-Getting things to work for you is part of the assessment.
+## Running
+Enter `infra-takehome` directory and run these commands:
+```
+make up
+make argocd
+make app
+```
+Wait a minute and run
+```
+curl --fail --silent http://localhost:8080/todos
+```
 
-You will be assessed by someone cloning your repository when you're finished and running your instructions to recreate the expected solution.
-If we cannot run your repository instructions we cannot assess your work.
-
-### Prerequsites
-
-You will need the following:
-* docker runtime and tools
-* k3d CLI
-* opentofu binary or terraform
-* kubectl binary
-* git
-
-## Starting point
-
-Use terraform or opentofu to initialise a k3d cluster and postgres instance locally from the `tofu` directory.
-Install Argo CD into the k3d cluster by following the instructions in the `argocd` directory.
-
-# Problem
-
-Please add commits to your fork of the repo to answer this problem.
-Note: the use of the word `postgrest` is confusing, but correct - this is a project that we're going to deploy.
-
-## Add a user to the database
-
-Please add a super user to the postgrest database.
-
-## Inject a secret for postgrest
-
-Creating a superuser account in this new database, inject the secrets into the k3d cluster into a namespace called postgrest.
-You must do this with terraform/opentofu.
-
-## Install Postgrest into the k3d cluster
-
-https://docs.postgrest.org/en/v14/
-
-The result should be an accessible endpoint that you can use in your browser.
-
-## Inject some data from the cluster using a `Job`
-
-Use a kubernetes job to inject some data into the postgres database
-
-## Provide an expected screenshot
-
-Update this file, README.md, with a screenshot of what we should see when we visit the URL after following your instructions - this should show us the data you have injected.
+You should get an output like this:
+```
+$ curl --fail --silent http://localhost:8080/todos
+[{"id":1,"done":false,"task":"review the take-home solution","due":null},
+ {"id":2,"done":true,"task":"bootstrap k3d with opentofu","due":null},
+ {"id":3,"done":false,"task":"deploy postgrest through argocd","due":null}]
+```
